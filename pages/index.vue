@@ -68,9 +68,9 @@
           {{ title }}
         </h1>
         <div class="mt-4 text-gray-700 dark:text-gray-200">
-          <p>Created by Bryant Gillespie</p>
-          <NuxtLink to="https://twitter.com/bryantgillespie" target="_blank"
-            >@bryantgillespie</NuxtLink
+          <p>Build My City Bounty Site</p>
+          <NuxtLink to="/hoome"
+            >@Home Page</NuxtLink
           >
         </div>
       </div>
