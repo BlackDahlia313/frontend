@@ -69,7 +69,7 @@
         </h1>
         <div class="mt-4 text-gray-700 dark:text-gray-200">
           <p>Build My City Bounty Site</p>
-          <NuxtLink to="/hoome"
+          <NuxtLink to="/home"
             >@Home Page</NuxtLink
           >
         </div>
