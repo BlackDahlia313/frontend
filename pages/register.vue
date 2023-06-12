@@ -11,28 +11,24 @@
     </div>
   </template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        email: '',
-      }
-    },
-    methods: {
-      async sendInvitation() {
-        try {
-          const { data } = await this.$directus.invites.create({
-            email: this.email,
-            role: '0bd42dcf-4815-4be1-8319-113c3dd77eba',
-          })
-          console.log('Invitation sent:', data)
-          // Optionally, you can redirect the user to a different page or show a success message.
-        } catch (error) {
-          console.error('Error sending invitation:', error)
-          // Handle the error, e.g., show an error message to the user.
-        }
-      },
-    },
+  <script setup>
+  import { onMounted, ref } from 'vue'
+  const { $directus } = useNuxtApp()
+  
+  const email = ref('')
+  
+  async function sendInvitation() {
+    try {
+      const { data } = await $directus.invites.create({
+        email: email.value,
+        role: '0bd42dcf-4815-4be1-8319-113c3dd77eba',
+      })
+      console.log('Invitation sent:', data)
+      // Optionally, you can redirect the user to a different page or show a success message.
+    } catch (error) {
+      console.error('Error sending invitation:', error)
+      // Handle the error, e.g., show an error message to the user.
+    }
   }
   </script>
   
