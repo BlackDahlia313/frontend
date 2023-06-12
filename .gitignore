@@ -7,3 +7,5 @@ node_modules
 *.log
 # Env file
 .env
+package-lock.json
+yarn.lock

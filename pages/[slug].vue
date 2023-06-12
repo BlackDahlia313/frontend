@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 // Import the $directus plugin
 const { $directus } = useNuxtApp()
 const { fileUrl } = useFiles()
@@ -45,18 +46,31 @@ useHead({
 
 // Fetch the page data from the Directus API using the Nuxt useAsyncData composable
 // https://v3.nuxtjs.org/docs/usage/data-fetching#useasyncdata
-const { data, pending, error } = await $fetch(
-  path,
-  () => {
-    return $directus
-      .items('pages')
-      .readByQuery({ filter: { slug: { _eq: params.slug } }, limit: 1 })
-  },
-  {
-    transform: (data) => data.data[0],
-    pick: ['title', 'content', 'image'],
+// const { data, pending, error } = await useAsyncData(
+//   path,
+//   () => {
+//     return $directus
+//       .items('pages')
+//       .readByQuery({ filter: { slug: { _eq: params.slug } }, limit: 1 })
+//   },
+//   {
+//     transform: (data) => data.data[0],
+//     pick: ['title', 'content', 'image'],
+//   }
+// )
+onMounted(async () => {
+  const { data, error } = await $directus
+    .items('pages')
+    .readByQuery({ filter: { slug: { _eq: params.slug } }, limit: 1 })
+
+  if (error) {
+    // Handle the error, e.g., show an error message
+    console.error(error)
+  } else {
+    page.value = data.data[0]
   }
-)
+})
+
 
 // Set the page data
 page.value = data.value
