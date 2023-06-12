@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-// import { useRouter } from 'vue-router'
-// import { useCookie } from '@nuxtjs/composition-api'
 
 interface AuthState {
   loggedIn: boolean
@@ -22,7 +20,6 @@ export const useAuth = defineStore('auth', {
     async login({ email, password, redirect }) {
       const router = useRouter()
       const { $directus } = useNuxtApp()
-      const { setCookie } = useCookie()
 
       try {
         // Try to login
@@ -31,7 +28,7 @@ export const useAuth = defineStore('auth', {
           password,
         })
 
-        // If login was successful, fetch the user's data
+        // If login was successful, fetch the users data
         const user = await $directus.users.me.read({
           fields: ['*'],
         })
@@ -39,12 +36,6 @@ export const useAuth = defineStore('auth', {
         // Update the auth store with the user data
         this.loggedIn = true
         this.user = user
-
-        // Set the authentication token cookie
-        setCookie('authToken', response.data.token, {
-          maxAge: 60 * 60 * 24 * 7, // Set the cookie to last for 7 days
-          sameSite: 'bmc', // Adjust the SameSite attribute as needed
-        })
 
         // If there's a redirect, send the user there
         if (redirect) {
@@ -55,31 +46,43 @@ export const useAuth = defineStore('auth', {
         throw new Error('Wrong email address or password')
       }
     },
+    async logout() {
+      const router = useRouter()
+      const { $directus } = useNuxtApp()
+      try {
+        // Try to logout
+        const response = await $directus.auth.logout()
 
-    // ... other actions ...
+        // Remove the auth_expires_at cookie that is left over from the logout
+        const authExpiration = useCookie('auth_expires_at')
+        authExpiration.value = null
 
+        // If logout was successful, reset the auth store
+        this.$reset()
+
+        // Send the user back to the home page
+        router.push('/')
+      } catch (e) {
+        console.log(e)
+        throw new Error('Issue logging out')
+      }
+    },
     async getUser() {
       const { $directus } = useNuxtApp()
-      const { getCookie } = useCookie()
-
       try {
         // Try to fetch the user data
         const user = await $directus.users.me.read({
           fields: ['*'],
         })
-
         // Update the auth store with the user data
         this.loggedIn = true
         this.user = user
-
-        // Get the authentication token from the cookie
-        const authToken = getCookie('authToken')
-
-        // Set the authentication token in the Directus SDK instance
-        $directus.auth.setToken(authToken)
       } catch (e) {
         console.log(e)
       }
+    },
+    async resetState() {
+      this.$reset()
     },
   },
 })

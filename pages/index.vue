@@ -3,7 +3,6 @@
     <header
       class="relative overflow-hidden rounded-tr rounded-bl bg-gradient-to-br from-slate-900 to-slate-700 shadow-primary-600 rounded-tl-3xl rounded-br-3xl"
     >
-      <!-- Header content -->
       <div class="md:flex md:justify-between">
         <h1 class="px-8 py-6 text-4xl font-extrabold text-white">
           {{ title }}
@@ -41,7 +40,6 @@
       id="examples"
       class="relative flex-1 divide-y-2 divide-gray-200 dark:divide-gray-800"
     >
-      <!-- Examples content -->
       <h2
         class="pb-6 text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-pink-600"
       >
@@ -51,12 +49,10 @@
       <ExamplesAuth id="authentication" class="py-12" />
       <ExamplesApiRoutes id="api" class="py-12" />
     </div>
-    </div>
     <div
       id="components"
       class="relative flex-1 divide-y-2 divide-gray-200 dark:divide-gray-800"
     >
-      <!-- Components content -->
       <h2
         class="pb-6 text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-700 to-pink-600"
       >
@@ -67,7 +63,6 @@
     <footer
       class="relative rounded-tr rounded-bl md:flex md:justify-between bg-gray-50 dark:bg-gray-800 rounded-tl-3xl rounded-br-3xl"
     >
-      <!-- Footer content -->
       <div class="p-8">
         <h1 class="text-4xl font-extrabold dark:text-white">
           {{ title }}
@@ -104,6 +99,7 @@
         />
       </div>
     </footer>
+  </div>
 </template>
 
 <script setup>
@@ -111,21 +107,4 @@ const title = 'Directus & Nuxt 3 Starter'
 useHead({
   title: title,
 })
-
-import { useAuth } from '~/store/auth'
-
-// Get user data from the store
-const auth = useAuth()
-// Call getUser function when the component is mounted
-onMounted(async () => {
-  if (auth.isLoggedIn.value) {
-    await getUser()
-  }
-})
-
-// Import other necessary modules
-
-export default {
-  // Other component options
-}
 </script>
