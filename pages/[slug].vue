@@ -49,11 +49,14 @@ onMounted(async () => {
   } else {
     if (data && data.length > 0) {
       page.value.title = data[0].title
-      page.value.content = data[0].content
-      page.value.image = data[0].image
+      page.value.contentHtml = data[0].content
+      
+      if (data[0].image) {
+        page.value.image = data[0].image
+      }
       
       const md = new MarkdownIt()
-      page.value.contentHtml = md.render(page.value.content)
+      page.value.contentHtml = md.render(page.value.contentHtml)
     } else {
       // Handle the case where the data is empty or not found
       console.error('Page data not found')
