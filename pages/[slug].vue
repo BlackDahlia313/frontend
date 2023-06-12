@@ -1,6 +1,6 @@
 <template>
   <ClientOnly fallback-tag="span" fallback="Loading page...">
-    <div v-if="page.status === 'Published'" class="max-w-3xl px-6 py-12 mx-auto space-y-8">
+    <div v-if="page.status === 'published'" class="max-w-3xl px-6 py-12 mx-auto space-y-8">
       <div class="max-w-3xl px-6 py-12 mx-auto space-y-8">
         <NuxtLink
           class="flex items-center font-bold text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-200"
@@ -23,7 +23,7 @@
             </div>
           </div>
         </div>
-        <div class="prose dark:prose-invert" v-html="page.contentHtml" />
+        <div v-if="page.contentHtml" class="prose dark:prose-invert" v-html="page.contentHtml" />
       </div>
     </div>
     <div v-else>
@@ -38,6 +38,7 @@ import MarkdownIt from 'markdown-it'
 const { $directus } = useNuxtApp()
 const { fileUrl } = useFiles()
 const { params } = useRoute()
+
 
 const page = ref({
   status: '',
