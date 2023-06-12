@@ -22,18 +22,21 @@
           </div>
         </div>
       </div>
-      <div class="prose dark:prose-invert" v-html="page.content" />
+      <div class="prose dark:prose-invert" v-html="page.contentHtml" />
     </div>
   </ClientOnly>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import MarkdownIt from 'markdown-it'
 const { $directus } = useNuxtApp()
 const { fileUrl } = useFiles()
 const { params } = useRoute()
 
-const page = ref({})
+const page = ref({
+  contentHtml: '',
+})
 
 onMounted(async () => {
   const { data, error } = await $directus
@@ -47,7 +50,9 @@ onMounted(async () => {
     if (data && data.length > 0) {
       page.value.title = data[0].title
       page.value.content = data[0].content
-      page.value.image = data[0].image
+
+      const md = new MarkdownIt()
+      page.value.contentHtml = md.render(page.value.content)
     } else {
       // Handle the case where the data is empty or not found
       console.error('Page data not found')
