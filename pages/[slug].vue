@@ -43,7 +43,12 @@ onMounted(async () => {
     // Handle the error, e.g., show an error message
     console.error(error)
   } else {
-    page.value = data.data[0]
+    if (data.data && data.data.length > 0) {
+      page.value = data.data[0]
+    } else {
+      // Handle the case where the data is empty or not found
+      console.error('Page data not found')
+    }
   }
 })
 
