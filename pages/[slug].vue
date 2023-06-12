@@ -10,6 +10,7 @@
       </NuxtLink>
       <div class="relative pt-48 pb-10 overflow-hidden shadow-xl rounded-2xl">
         <img
+          v-if="page.image"
           class="absolute inset-0 object-cover w-full h-full"
           :src="fileUrl(page.image)"
         />
