@@ -50,7 +50,8 @@ onMounted(async () => {
     if (data && data.length > 0) {
       page.value.title = data[0].title
       page.value.content = data[0].content
-
+      page.value.image = data[0].image
+      
       const md = new MarkdownIt()
       page.value.contentHtml = md.render(page.value.content)
     } else {
