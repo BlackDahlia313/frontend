@@ -30,21 +30,23 @@
 import { onMounted, ref } from 'vue'
 const { $directus } = useNuxtApp()
 const { fileUrl } = useFiles()
-const { params, path } = useRoute()
+const { params } = useRoute()
 
 const page = ref({})
 
 onMounted(async () => {
   const { data, error } = await $directus
     .items('pages')
-    .readByQuery({ filter: { slug: { _eq: params.slug } }, limit: 1 })
+    .readByQuery({ filter: { slug: params.slug }, limit: 1 })
 
   if (error) {
     // Handle the error, e.g., show an error message
     console.error(error)
   } else {
-    if (data.data && data.data.length > 0) {
-      page.value = data.data[0]
+    if (data && data.length > 0) {
+      page.value.title = data[0].title
+      page.value.content = data[0].content
+      page.value.image = data[0].image
     } else {
       // Handle the case where the data is empty or not found
       console.error('Page data not found')
@@ -52,7 +54,7 @@ onMounted(async () => {
   }
 })
 
-useHead({
-  title: page.value.title,
-})
+useHead(() => ({
+  title: page.value.title || '',
+}))
 </script>
