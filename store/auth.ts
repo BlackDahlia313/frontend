@@ -43,7 +43,7 @@ export const useAuth = defineStore('auth', {
         // Set the authentication token cookie
         setCookie('authToken', response.data.token, {
           maxAge: 60 * 60 * 24 * 7, // Set the cookie to last for 7 days
-          sameSite: 'lax', // Adjust the SameSite attribute as needed
+          sameSite: 'bmc', // Adjust the SameSite attribute as needed
         })
 
         // If there's a redirect, send the user there
