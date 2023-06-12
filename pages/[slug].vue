@@ -57,7 +57,7 @@ onMounted(async () => {
       const pageData = data[0]
       page.value.status = pageData.status
 
-      if (pageData.status === 'Published') {
+      if (pageData.status === 'published') {
         page.value.title = pageData.title
         page.value.contentHtml = pageData.content
         
