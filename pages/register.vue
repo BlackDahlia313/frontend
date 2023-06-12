@@ -8,7 +8,24 @@
       </div>
       <div class="mb-4">
         <label for="role" class="block mb-1">Role</label>
-        <Select v-model="selectedRole" :options="roleOptions" required />
+        <Listbox v-model="selectedRole" :options="roleOptions" required>
+          <ListboxButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            <span class="block truncate">{{ selectedRole ? selectedRole.name : 'Select a role' }}</span>
+            <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+              <SelectorIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
+            </span>
+          </ListboxButton>
+          <ListboxOptions class="absolute z-10 w-full py-1 mt-1 overflow-auto bg-white border border-gray-300 rounded-md shadow-lg max-h-60 sm:text-sm" v-slot="{ active }">
+            <ListboxOption
+              v-for="role in roleOptions"
+              :key="role.id"
+              :value="role"
+              :class="{ 'text-white bg-blue-500': active === role }"
+            >
+              {{ role.name }}
+            </ListboxOption>
+          </ListboxOptions>
+        </Listbox>
       </div>
       <input type="hidden" name="invite_url" :value="inviteUrl" />
       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Send Invitation</button>
@@ -18,7 +35,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import { Select } from '@headlessui/vue'
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
+import { SelectorIcon } from '@heroicons/vue/solid'
 const { $directus } = useNuxtApp()
 
 const email = ref('')
@@ -43,7 +61,3 @@ async function sendInvitation() {
   }
 }
 </script>
-
-<style scoped>
-  /* Add custom styles for the Select component if needed */
-</style>
