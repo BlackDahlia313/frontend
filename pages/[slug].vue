@@ -69,8 +69,8 @@ onMounted(async () => {
         page.value.contentHtml = md.render(page.value.contentHtml)
       } else {
         // Redirect to the home page
-        const router = useRouter();
-        $router.push({ path: '/' })
+        
+        this.$router.push({ path: '/' })
       }
     } else {
       // Handle the case where the data is empty or not found
