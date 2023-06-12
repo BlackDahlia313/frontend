@@ -18,11 +18,11 @@ const { $directus } = useNuxtApp()
 
 const email = ref('')
 
-const inviteUrl = `${window.location.origin}/accept-invite`
+const inviteUrl = 'https://buildmy.city/accept-invite'
 
 async function sendInvitation() {
   try {
-    await $directus.users.invites.send(email.value, '0bd42dcf-4815-4be1-8319-113c3dd77eba')
+    await $directus.users.invites.send(email.value, '0bd42dcf-4815-4be1-8319-113c3dd77eba', inviteUrl)
     console.log('Invitation sent')
     // Optionally, you can redirect the user to a different page or show a success message.
   } catch (error) {
