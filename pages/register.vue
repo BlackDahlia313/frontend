@@ -19,11 +19,8 @@
   
   async function sendInvitation() {
     try {
-      const { data } = await $directus.invites.create({
-        email: email.value,
-        role: '0bd42dcf-4815-4be1-8319-113c3dd77eba',
-      })
-      console.log('Invitation sent:', data)
+      await $directus.users.invites.send(email.value, '0bd42dcf-4815-4be1-8319-113c3dd77eba')
+      console.log('Invitation sent')
       // Optionally, you can redirect the user to a different page or show a success message.
     } catch (error) {
       console.error('Error sending invitation:', error)
