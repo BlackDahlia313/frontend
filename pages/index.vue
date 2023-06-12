@@ -37,10 +37,6 @@ useHead({
 import { useAuth } from '~/store/auth'
 
 // Get user data from the store
-import { storeToRefs } from 'pinia'
-import { useAuth } from '~~/store/auth'
-const { fileUrl } = useFiles()
-const { isLoggedIn, user } = storeToRefs(auth)
 
 export default {
   async mounted() {
