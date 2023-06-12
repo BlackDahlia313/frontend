@@ -122,8 +122,11 @@ onMounted(async () => {
     await getUser()
   }
 })
+</script>
+<script>
+// Import other necessary modules
 
 export default {
-
+  // Other component options
 }
 </script>
