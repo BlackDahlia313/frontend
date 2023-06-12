@@ -2,9 +2,10 @@
     <div class="max-w-md mx-auto mt-8">
       <h1 class="text-2xl font-bold mb-4">Accept Invite</h1>
       <form @submit.prevent="acceptInvite">
+        <input type="hidden" name="token" :value="inviteToken" />
         <div class="mb-4">
-          <label for="token" class="block mb-1">Accept Token</label>
-          <input v-model="token" type="text" id="token" required />
+          <label for="acceptToken" class="block mb-1">Accept Token</label>
+          <input v-model="acceptToken" type="text" id="acceptToken" required readonly />
         </div>
         <div class="mb-4">
           <label for="password" class="block mb-1">Password</label>
@@ -22,10 +23,18 @@
   <script setup>
   import { onMounted, ref } from 'vue'
   const { $directus } = useNuxtApp()
+  const { query } = useRoute()
   
-  const token = ref('')
+  const acceptToken = ref('')
   const password = ref('')
   const confirmPassword = ref('')
+  
+  // Parse the invite token from the URL query parameters
+  const inviteToken = query.token || ''
+  
+  onMounted(() => {
+    acceptToken.value = inviteToken
+  })
   
   async function acceptInvite() {
     try {
@@ -35,7 +44,7 @@
         return
       }
   
-      await $directus.users.invites.accept(token.value, password.value)
+      await $directus.users.invites.accept(acceptToken.value, password.value)
       console.log('Invite accepted')
       // Optionally, you can redirect the user to a different page or show a success message.
     } catch (error) {
