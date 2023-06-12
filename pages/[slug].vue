@@ -14,7 +14,7 @@ import { onMounted, ref } from 'vue'
 import MarkdownIt from 'markdown-it'
 const { $directus } = useNuxtApp()
 const { fileUrl } = useFiles()
-const { params, router } = useRoute()
+const { params } = useRoute()
 
 const page = ref({
   status: '',
@@ -46,7 +46,7 @@ onMounted(async () => {
         page.value.contentHtml = md.render(page.value.contentHtml)
       } else {
         // Redirect to the home page
-        router.push('/')
+        $nuxt.$router.push('/')
       }
     } else {
       // Handle the case where the data is empty or not found
