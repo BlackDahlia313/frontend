@@ -111,19 +111,19 @@ const title = 'Directus & Nuxt 3 Starter'
 useHead({
   title: title,
 })
-</script>
 
-<script>
 import { useAuth } from '~/store/auth'
 
 // Get user data from the store
+const auth = useAuth()
+// Call getUser function when the component is mounted
+onMounted(async () => {
+  if (auth.isLoggedIn.value) {
+    await getUser()
+  }
+})
 
 export default {
-  async mounted() {
-    const auth = useAuth()
-    if (auth.isLoggedIn.value) {
-      await getUser()
-    }
-  },
+
 }
 </script>
