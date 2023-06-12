@@ -70,7 +70,7 @@ onMounted(async () => {
         page.value.contentHtml = md.render(page.value.contentHtml)
       } else {
         // Redirect to the home page
-        $nuxt.$router.push('/')
+        $router.push({ path: '/' })
       }
     } else {
       // Handle the case where the data is empty or not found
