@@ -104,7 +104,6 @@
         />
       </div>
     </footer>
-  </div>
 </template>
 
 <script setup>
