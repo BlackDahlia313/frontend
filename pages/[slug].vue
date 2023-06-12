@@ -70,7 +70,7 @@ onMounted(async () => {
       } else {
         // Redirect to the home page
         
-        this.$router.push({ path: '/' })
+        console.log("no")
       }
     } else {
       // Handle the case where the data is empty or not found
