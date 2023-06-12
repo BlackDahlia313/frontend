@@ -57,7 +57,7 @@ onMounted(async () => {
       const pageData = data[0]
       page.value.status = pageData.status
 
-      if (pageData.status === 'published') {
+      if (pageData.status === 'Published') {
         page.value.title = pageData.title
         page.value.contentHtml = pageData.content
         
@@ -69,8 +69,7 @@ onMounted(async () => {
         page.value.contentHtml = md.render(page.value.contentHtml)
       } else {
         // Redirect to the home page
-        
-        console.log("no")
+        await navigateTo({ path: '/' })
       }
     } else {
       // Handle the case where the data is empty or not found
