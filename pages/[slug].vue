@@ -45,7 +45,7 @@ useHead({
 
 // Fetch the page data from the Directus API using the Nuxt useAsyncData composable
 // https://v3.nuxtjs.org/docs/usage/data-fetching#useasyncdata
-const { data, pending, error } = await useFetch(
+const { data, pending, error } = await $fetch(
   path,
   () => {
     return $directus
