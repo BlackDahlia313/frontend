@@ -62,71 +62,62 @@
   </ExamplesTwoCols>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from 'vue'
-import { useNuxtApp, useFiles } from 'nuxt-composition-api'
-import { useAuth } from '~~/store/auth'
+import { useAuth, useRouter, useCookie } from 'nuxt-composition-api'
 
-export default {
-  setup() {
-    const { $directus } = useNuxtApp()
-    const { fileUrl } = useFiles()
-    const auth = useAuth()
-    const isLoggedIn = ref(auth.isLoggedIn)
-    const user = ref(auth.userData)
+const auth = useAuth()
+const isLoggedIn = ref(auth.isLoggedIn)
+const user = ref(auth.userData)
 
-    // Login action
-    const login = async ({ email, password }) => {
-      try {
-        // Try to login
-        const response = await $directus.auth.login({
-          email,
-          password,
-        })
-
-        // Fetch the user's data
-        await auth.getUser()
-
-        // Update the local refs
-        isLoggedIn.value = auth.isLoggedIn
-        user.value = auth.userData
-      } catch (e) {
-        console.log(e)
-        throw new Error('Wrong email address or password')
-      }
-    }
-
-    // Logout action
-    const logout = async () => {
-      try {
-        // Try to logout
-        await auth.logout()
-
-        // Update the local refs
-        isLoggedIn.value = auth.isLoggedIn
-        user.value = auth.userData
-      } catch (e) {
-        console.log(e)
-        throw new Error('Issue logging out')
-      }
-    }
-
-    // Fetch user data on component mount
-    onMounted(async () => {
-      await auth.getUser()
-
-      // Update the local refs
-      isLoggedIn.value = auth.isLoggedIn
-      user.value = auth.userData
+// Login action
+const login = async ({ email, password }) => {
+  try {
+    // Try to login
+    const response = await auth.login({
+      email,
+      password,
     })
 
-    return {
-      fileUrl,
-      isLoggedIn,
-      user,
-      login,
-      logout,
-    }
-  },
+    // Fetch the user's data
+    await auth.getUser()
+
+    // Update the local refs
+    isLoggedIn.value = auth.isLoggedIn
+    user.value = auth.userData
+  } catch (e) {
+    console.log(e)
+    throw new Error('Wrong email address or password')
+  }
 }
+
+// Logout action
+const logout = async () => {
+  try {
+    // Try to logout
+    await auth.logout()
+
+    // Update the local refs
+    isLoggedIn.value = auth.isLoggedIn
+    user.value = auth.userData
+  } catch (e) {
+    console.log(e)
+    throw new Error('Issue logging out')
+  }
+}
+
+// Fetch user data on component mount
+onMounted(async () => {
+  await auth.getUser()
+
+  // Update the local refs
+  isLoggedIn.value = auth.isLoggedIn
+  user.value = auth.userData
+})
+
+const { fileUrl } = useFiles()
+const router = useRouter()
+const { useNuxtApp } = context
+const { $directus } = useNuxtApp()
+
 </script>
