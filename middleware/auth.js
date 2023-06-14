@@ -5,12 +5,14 @@ const msg =
 export default defineNuxtRouteMiddleware((to, from) => {
   const user = useAuth()
 
-  if (!user.isLoggedIn) {
-    if (process.client) {
-      window.alert(msg)
-    }
-    console.log(msg)
+  user.watch((state) => {
+    if (!state.isLoggedIn) {
+      if (process.client) {
+        window.alert(msg)
+      }
+      console.log(msg)
 
-    return navigateTo('/')
-  }
+      return navigateTo('/')
+    }
+  })
 })
