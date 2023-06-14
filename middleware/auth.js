@@ -1,5 +1,4 @@
 import { useAuth } from '~/store/auth'
-import { navigateTo } from 'nuxt-composition-api'
 
 const msg = 'You must be logged in to view this page.'
 
