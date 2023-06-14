@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { onMounted } from 'vue'
 
 interface AuthState {
   loggedIn: boolean
@@ -85,4 +86,9 @@ export const useAuth = defineStore('auth', {
       this.$reset()
     },
   },
+})
+
+// Call the `getUser` action when the store is mounted
+onMounted(() => {
+  useAuth().getUser()
 })
