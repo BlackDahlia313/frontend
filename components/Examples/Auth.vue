@@ -61,13 +61,15 @@
 </template>
 
 <script setup>
+// Get user data from the store
+import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import { useAuth } from '~~/store/auth'
 const auth = useAuth()
 const { fileUrl } = useFiles()
 
 // Get user data from the store
-const { isLoggedIn, user } = auth
+const { isLoggedIn, user } = storeToRefs(auth)
 
 // Fetch user data on component mount
 onMounted(() => {
