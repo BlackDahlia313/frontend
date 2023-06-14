@@ -3,9 +3,9 @@ import { storeToRefs } from 'pinia'
 const msg = 'You must be logged in to view this page.'
 
 export default defineNuxtRouteMiddleware(({ redirect, from }) => {
-  const user = useAuth()
+  const auth = useAuth()
   
-  const { isLoggedIn } = storeToRefs(auth)
+  const { isLoggedIn, user } = storeToRefs(auth)
 
   // Check if the middleware is called on the client-side
   if (process.client) {
