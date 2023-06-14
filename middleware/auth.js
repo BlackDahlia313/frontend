@@ -2,19 +2,19 @@ import { useAuth } from '~/store/auth'
 
 const msg = 'You must be logged in to view this page.'
 
-export default defineNuxtRouteMiddleware(({ redirect, from, next }) => {
+export default function ({ store, redirect, from }) {
   const user = useAuth()
 
-  // Check if the middleware is called on the client-side
-  if (process.client) {
+  // Check if the user is logged out
+  if (!user.isLoggedIn) {
     // Check if the previous route is not the current route
     // This check is to avoid alert and redirection when accessing the page directly via the URL
     if (from?.path !== null && from?.path !== '/') {
-      if (!user.isLoggedIn) {
+      if (process.client) {
         window.alert(msg)
-        // Redirect to the login page or any other appropriate page
-        return navigateTo('/')
       }
+      console.log(msg)
+      return navigateTo('/')
     }
   }
-})
+}
