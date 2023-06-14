@@ -82,6 +82,7 @@ const selectedRole = ref(null)
 const roleOptions = [
   { id: '0bd42dcf-4815-4be1-8319-113c3dd77eba', name: 'Architect' },
   { id: '46f6eb68-4724-48cc-bb00-0cc23f6d2950', name: 'Builder' },
+  { id: 'b1615993-a5f6-4e71-9f9d-afae444b6c2c', name: 'Investor' },
   // Add more role options as needed
 ]
 
