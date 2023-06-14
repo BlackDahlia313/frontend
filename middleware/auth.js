@@ -12,9 +12,12 @@ export default defineNuxtRouteMiddleware(({ redirect, from }) => {
     // Check if the previous route is not the current route
     // This check is to avoid alert and redirection when accessing the page directly via the URL
     if (from?.path !== null && from?.path !== '/') {
-      if (!user.isLoggedIn) {
-        window.alert(msg)
+      if (user.isLoggedIn) {
+        
         // Redirect to the login page or any other appropriate page
+        
+      } else{
+        window.alert(msg)
         return navigateTo('/')
       }
     }
