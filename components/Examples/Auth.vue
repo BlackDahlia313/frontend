@@ -9,7 +9,6 @@
 
       <div class="not-prose">
         <NuxtLink
-          v-if="isLoggedIn"
           class="inline-flex items-center font-bold text-primary-600 group hover:text-primary-800 dark:text-primary-200 dark:hover:text-primary-400"
           to="/protected-page"
           >View Protected Content <span class="ml-2 text-xl">→</span></NuxtLink
@@ -20,7 +19,7 @@
       <div class="space-y-12">
         <!-- Login Form -->
         <div class="">
-          <ExamplesLoginForm v-if="!isLoggedIn" @login="login" />
+          <ExamplesLoginForm v-if="!isLoggedIn" />
           <div v-if="isLoggedIn" class="flex items-center justify-between">
             <div class="flex items-center">
               <img
@@ -36,12 +35,11 @@
                 </p>
               </div>
             </div>
-            <VButton variant="primary" @click="logout">Logout</VButton>
+            <VButton variant="primary" @click="auth.logout()"> Logout</VButton>
           </div>
         </div>
         <!-- User Details -->
         <div
-          v-if="isLoggedIn"
           class="flex flex-col p-4 rounded-lg bg-gradient-to-b from-primary-600 to-primary-900"
         >
           <p
@@ -54,7 +52,7 @@
           </p>
           <pre
             class="h-full p-4 mt-4 overflow-x-auto text-sm text-gray-100 whitespace-pre bg-gray-800 border-2 rounded-lg border-primary-800"
-          >{{ user }}</pre
+            >{{ user }}</pre
           >
         </div>
       </div>
@@ -63,61 +61,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-
+import { onMounted } from 'vue'
+import { useAuth } from '~~/store/auth'
 const auth = useAuth()
-const isLoggedIn = ref(auth.isLoggedIn)
-const user = ref(auth.userData)
+const { fileUrl } = useFiles()
 
-// Login action
-const login = async ({ email, password }) => {
-  try {
-    // Try to login
-    const response = await auth.login({
-      email,
-      password,
-    })
-
-    // Fetch the user's data
-    await auth.getUser()
-
-    // Update the local refs
-    isLoggedIn.value = auth.isLoggedIn
-    user.value = auth.userData
-  } catch (e) {
-    console.log(e)
-    throw new Error('Wrong email address or password')
-  }
-}
-
-// Logout action
-const logout = async () => {
-  try {
-    // Try to logout
-    await auth.logout()
-
-    // Update the local refs
-    isLoggedIn.value = auth.isLoggedIn
-    user.value = auth.userData
-  } catch (e) {
-    console.log(e)
-    throw new Error('Issue logging out')
-  }
-}
+// Get user data from the store
+const { isLoggedIn, user } = auth
 
 // Fetch user data on component mount
-onMounted(async () => {
-  await auth.getUser()
-
-  // Update the local refs
-  isLoggedIn.value = auth.isLoggedIn
-  user.value = auth.userData
+onMounted(() => {
+  auth.getUser()
 })
-
-const fileUrl = (avatar) => {
-  // Implement your fileUrl logic here
-}
-
-const router = useRouter()
-
 </script>
