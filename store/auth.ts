@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 
-
 interface AuthState {
   loggedIn: boolean
   user: object
@@ -20,7 +19,7 @@ export const useAuth = defineStore('auth', {
   actions: {
     async login({ email, password, redirect }) {
       const router = useRouter()
-      const $directus = this.$nuxt.$directus
+      const { $directus } = useNuxtApp()
 
       try {
         // Try to login
@@ -29,12 +28,12 @@ export const useAuth = defineStore('auth', {
           password,
         })
 
-        // If login was successful, fetch the user's data
+        // If login was successful, fetch the users data
         const user = await $directus.users.me.read({
           fields: ['*'],
         })
 
-        // Update the auth store with the user's data
+        // Update the auth store with the user data
         this.loggedIn = true
         this.user = user
 
@@ -49,7 +48,7 @@ export const useAuth = defineStore('auth', {
     },
     async logout() {
       const router = useRouter()
-      const $directus = this.$nuxt.$directus
+      const { $directus } = useNuxtApp()
       try {
         // Try to logout
         const response = await $directus.auth.logout()
@@ -69,13 +68,13 @@ export const useAuth = defineStore('auth', {
       }
     },
     async getUser() {
-      const $directus = this.$nuxt.$directus
+      const { $directus } = useNuxtApp()
       try {
-        // Try to fetch the user's data
+        // Try to fetch the user data
         const user = await $directus.users.me.read({
           fields: ['*'],
         })
-        // Update the auth store with the user's data
+        // Update the auth store with the user data
         this.loggedIn = true
         this.user = user
       } catch (e) {

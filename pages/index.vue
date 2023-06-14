@@ -68,9 +68,9 @@
           {{ title }}
         </h1>
         <div class="mt-4 text-gray-700 dark:text-gray-200">
-          <p>Build My City Bounty Site</p>
-          <NuxtLink to="/home"
-            >@Home Page</NuxtLink
+          <p>Created by Bryant Gillespie</p>
+          <NuxtLink to="https://twitter.com/bryantgillespie" target="_blank"
+            >@bryantgillespie</NuxtLink
           >
         </div>
       </div>
@@ -103,7 +103,7 @@
 </template>
 
 <script setup>
-const title = 'Directus & Nuxt 3 Starter'
+const title = 'BuildMy.City'
 useHead({
   title: title,
 })
