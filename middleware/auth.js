@@ -1,18 +1,18 @@
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+// import { onMounted } from 'vue'
 import { useAuth } from '~/store/auth'
 
 const msg =
   'You must be logged in to view this page.'
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  const auth = useAuth()
+  const user = useAuth()
   // Get user data from the store
-const { isLoggedIn, user } = storeToRefs(auth)
+const { isLoggedIn } = storeToRefs(auth)
 
-// Fetch user data on component mount
+// // Fetch user data on component mount
 
-  auth.getUser()
+//   auth.getUser()
 
 
   if (!user.isLoggedIn) {
