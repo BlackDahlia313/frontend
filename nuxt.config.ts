@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   // As of RC12 Nuxt 3 supports Hybrid rendering mode
   // https://v3.nuxtjs.org/guide/concepts/rendering#route-rules
     routeRules: {
-      '/protected-page/**': { ssr: true },
+      '/protected-page/**': { swr: true },
       '/pages/**': { static: true },
     },
 
