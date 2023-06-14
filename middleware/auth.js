@@ -17,8 +17,4 @@ export default defineNuxtRouteMiddleware(({ redirect, from, next }) => {
       }
     }
   }
-
-  // If the middleware is called on the server-side or the previous route is the current route
-  // Proceed without alert and redirection
-  next()
 })
