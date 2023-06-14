@@ -14,6 +14,9 @@ export default defineNuxtRouteMiddleware(({ redirect, from }) => {
         window.alert(msg)
         // Redirect to the login page or any other appropriate page
         return navigateTo('/')
+      } else {
+        // User is already logged in, allow them to proceed
+        return
       }
     }
   }
