@@ -11,9 +11,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
 const { isLoggedIn, user } = storeToRefs(auth)
 
 // Fetch user data on component mount
-onMounted(() => {
+
   auth.getUser()
-})
+
 
   if (!user.isLoggedIn) {
     if (process.client) {
