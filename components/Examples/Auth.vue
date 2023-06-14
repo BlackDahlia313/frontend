@@ -64,7 +64,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useAuth, useRouter, useCookie } from 'nuxt-composition-api'
 
 const auth = useAuth()
 const isLoggedIn = ref(auth.isLoggedIn)
@@ -115,9 +114,10 @@ onMounted(async () => {
   user.value = auth.userData
 })
 
-const { fileUrl } = useFiles()
+const fileUrl = (avatar) => {
+  // Implement your fileUrl logic here
+}
+
 const router = useRouter()
-const { useNuxtApp } = context
-const { $directus } = useNuxtApp()
 
 </script>
